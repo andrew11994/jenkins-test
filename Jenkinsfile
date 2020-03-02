@@ -22,10 +22,9 @@ pipeline {
                 sh '''
 		   
 
-		    raw_repos="$(curl -u "${env.GH_TOKEN}":x-oauth-basic" -s "${env.GITHUB_BASE_URL}/orgs/"${env.SRC_GH_ORG}"/repos)" 
+		    raw_repos="$(curl -u "${env.GH_TOKEN}":x-oauth-basic" -s "${env.GITHUB_BASE_URL}/orgs/"${env.SRC_GH_ORG}"/repos)"
+		    echo $raw_repos
 		    '''
-		  
-
                     target_repos="$(echo "$raw_repos" | jq -r '.[] | .name' | grep -v "${env.TARGET_BLACKLIST}")"
                     for repo in "$target_repos"; do
                         bash git_labels.sh ${env.GH_TOKEN} andrew11994 test andrew11994 $repo
