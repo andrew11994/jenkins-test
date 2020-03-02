@@ -1,26 +1,19 @@
-pipeline {
-	agent any
-	environment {
-		GITHUB_BASE_URL = 'https://api.github.com'
-     	SRC_GH_ORG = 'sample11995'
-     	TARGET_BLACKLIST = 'test3'
-     	GH_TOKEN = credentials('fccf94be-e58b-4c2c-abfa-1e54d5178934')
-     	}
-	stages {
-		stage ('git_checkout') {
-                steps {
-                	git 'https://andrew11994:2Kgmutton@github.com/andrew11994/git_labels.git'
-        		}
-        	}
-    	stage('execute shell') {
-                
-                steps {
-                    	sh "raw_repos=$(curl -u ${env.GH_TOKEN}:x-oauth-basic -s ${env.GITHUB_BASE_URL}/orgs/${env.SRC_GH_ORG}/repos)"
-                    	sh "target_repos=$(echo $raw_repos | jq -r '.[] | .name' | grep -v ${env.TARGET_BLACKLIST})"
-                    	sh "for repo in $target_repos; do
-                        	bash git_labels.sh ${env.GH_TOKEN} andrew11994 test andrew11994 $repo
-                    	done"
-            }
+node {
+	def GITHUB_BASE_URL = "https://api.github.com"
+    	def SRC_GH_ORG = "sample11995" // --> GH_USER
+    	def TARGET_BLACKLIST = "test3"
+	stage ('git_checkout') {
+                git 'https://andrew11994:2Kgmutton@github.com/andrew11994/git_labels.git'
         }
-	}
+    stage('execute shell') {
+	    withCredentials([string(credentialsId: 'fccf94be-e58b-4c2c-abfa-1e54d5178934', variable: 'TOKEN')]) {
+                sh '''
+                    raw_repos=$(curl -u ${GH_TOKEN}:x-oauth-basic -s ${GITHUB_BASE_URL}/orgs/${SRC_GH_ORG}/repos)
+                    target_repos=$(echo $raw_repos | jq -r '.[] | .name' | grep -v ${TARGET_BLACKLIST})
+                    for repo in "$target_repos"; do
+                        bash git_labels.sh ${GH_TOKEN} andrew11994 test andrew11994 $repo
+                    done
+                '''
+	    }
+        }
 }
