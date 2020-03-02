@@ -22,7 +22,7 @@ pipeline {
                 sh """
 		    #!/bin/bash
 
-		    raw_repos=$(curl -u ${env.GH_TOKEN}:x-oauth-basic -s ${env.GITHUB_BASE_URL}/orgs/${env.SRC_GH_ORG}/repos) 
+		    raw_repos="$(curl -u "${env.GH_TOKEN}":x-oauth-basic" -s "${env.GITHUB_BASE_URL}/orgs/"${env.SRC_GH_ORG}"/repos)" 
 		    """
 		  
 
