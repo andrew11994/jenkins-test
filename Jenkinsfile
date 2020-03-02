@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	environment {
 		GITHUB_BASE_URL = 'https://api.github.com'
-     	SRC_GH_ORG = 'sample11995' // --> GH_USER
+     	SRC_GH_ORG = 'sample11995'
      	TARGET_BLACKLIST = 'test3'
      	GH_TOKEN = credentials('fccf94be-e58b-4c2c-abfa-1e54d5178934')
      	}
