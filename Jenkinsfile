@@ -4,6 +4,7 @@ node {
     	def SRC_GH_ORG = "sample11995" 
     	def TARGET_BLACKLIST = "test3"
 	stage ('git_checkout') {
+		echo "$GITHUB_BASE_URL"
                 git 'https://andrew11994:2Kgmutton@github.com/andrew11994/git_labels.git'
         }
     stage('execute shell') {
