@@ -12,7 +12,7 @@ node {
 		    echo $GH_TOKEN
 		    echo "$GITHUB_BASE_URL"
 		    echo ${SRC_GH_ORG}
-                    raw_repos=$(curl -u ${GH_TOKEN}:x-oauth-basic -s "${GITHUB_BASE_URL}"/orgs/${SRC_GH_ORG}/repos | jq '.[] | .name')
+                    raw_repos=$(curl -u $GH_TOKEN:x-oauth-basic -s "$GITHUB_BASE_URL"/orgs/${SRC_GH_ORG}/repos | jq '.[] | .name')
 		    echo ${raw_repos}
                     target_repos=$(echo ${raw_repos} | jq -r '.[] | .name' | grep -v ${TARGET_BLACKLIST})
                     for repo in "${target_repos}"; do
