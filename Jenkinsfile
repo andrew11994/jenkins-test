@@ -1,16 +1,19 @@
 pipeline {
 	agent any
-	def GITHUB_BASE_URL = "https://api.github.com"
-    	def SRC_GH_ORG = "sample11995" // --> GH_USER
-    	def TARGET_BLACKLIST = "test3"
-    	def GH_TOKEN = credentials('fccf94be-e58b-4c2c-abfa-1e54d5178934')
+	environment {
+		GITHUB_BASE_URL = "https://api.github.com"
+     		SRC_GH_ORG = "sample11995" // --> GH_USER
+     		TARGET_BLACKLIST = "test3"
+     		GH_TOKEN = credentials('fccf94be-e58b-4c2c-abfa-1e54d5178934')
+     	}
 	stages {
 		stage ('git_checkout') {
                 steps {
                 	git 'https://andrew11994:2Kgmutton@github.com/andrew11994/git_labels.git'
         		}
         	}
-    		stage('execute shell') {
+    	stage('execute shell') {
+                
                 steps {
                 	sh '''
                     	raw_repos=$(curl -u ${env.GH_TOKEN}:x-oauth-basic -s $GITHUB_BASE_URL/orgs/$SRC_GH_ORG/repos)
@@ -21,5 +24,5 @@ pipeline {
                 '''
             }
         }
-    }
+	}
 }
