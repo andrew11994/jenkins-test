@@ -1,9 +1,9 @@
 pipeline {
     agent any
     //environment {
-       def GITHUB_BASE_URL = 'https://api.github.com'
-       def SRC_GH_ORG = 'sample11995' // --> GH_USER
-       def TARGET_BLACKLIST = 'test3'
+       def GITHUB_BASE_URL = "https://api.github.com"
+       def SRC_GH_ORG = "sample11995" // --> GH_USER
+       def TARGET_BLACKLIST = "test3"
        def GH_TOKEN = credentials('fccf94be-e58b-4c2c-abfa-1e54d5178934')
     //}
     // trigger {
