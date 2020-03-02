@@ -15,13 +15,13 @@ pipeline {
     	stage('execute shell') {
                 
                 steps {
-			script {
+			bash '''
                     	raw_repos=$(curl -u ${env.GH_TOKEN}:x-oauth-basic -s $GITHUB_BASE_URL/orgs/$SRC_GH_ORG/repos)
                     	target_repos=$(echo $raw_repos | jq -r '.[] | .name' | grep -v $TARGET_BLACKLIST)
                     	for repo in "$target_repos"; do
                         	bash git_labels.sh ${env.GH_TOKEN} andrew11994 test andrew11994 $repo
                     	done
-			}
+			'''
             }
         }
 	}
