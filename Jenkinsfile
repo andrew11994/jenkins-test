@@ -18,9 +18,9 @@ pipeline {
                   def raw_repos= sh(script: "curl -u ${GH_TOKEN}:x-oauth-basic -s ${env.GITHUB_BASE_URL}/orgs/${env.SRC_GH_ORG}/repos | jq '.[] | .name'", returnStdout: true)
                   echo "raw_repos = ${raw_repos}"
                   //def target_repos= sh(script: "echo ${raw_repos} | jq -r '.[] | .name'| grep -v ${env.TARGET_BLACKLIST}",returnStdout: true)          
-                      //for (repo in raw_repos) {
-                      //println repo
-                      //}
+                  for (repo in raw_repos) {
+                     println repo
+                     }
                 //sh "./github-copy-labels.sh ${GH_TOKEN} Test-labels ${repo}"    
                     }
                 }    
