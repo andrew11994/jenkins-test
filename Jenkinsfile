@@ -19,7 +19,7 @@ pipeline {
                   echo "raw_repos = ${raw_repos}"
                   def list = new GroovyShell().evaluate("${raw_repos}")
                   //def target_repos= sh(script: "echo ${raw_repos} | jq -r '.[] | .name'| grep -v ${env.TARGET_BLACKLIST}",returnStdout: true)          
-                  for (repo in raw_repos) {
+                  for (repo in list) {
                      println repo
                      }
                 //sh "./github-copy-labels.sh ${GH_TOKEN} Test-labels ${repo}"    
