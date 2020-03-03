@@ -4,7 +4,7 @@ pipeline {
         GITHUB_BASE_URL = 'https://api.github.com'
         SRC_GH_ORG = 'sample11995' // --> GH_USER
         TARGET_BLACKLIST = 'test3'
-        GH_TOKEN = credentials('fccf94be-e58b-4c2c-abfa-1e54d5178934')
+        //GH_TOKEN = credentials('fccf94be-e58b-4c2c-abfa-1e54d5178934')
     }
     // trigger {
     //     cron('xxxxxx')
@@ -19,7 +19,7 @@ pipeline {
             //when { triggeredBy 'TimerTrigger' }
             steps {
                 script {
-                  withCredentials([usernamePassword(credentialsId: 'githubcred', passwordVariable: 'GH_TOKEN', usernameVariable: 'GH_USER')]) {
+                  withCredentials([string(credentialsId: 'git', passwordVariable: 'GH_TOKEN', usernameVariable: 'GH_USER')]) {
                   def raw_repos= sh(script: "curl -u ${GH_TOKEN}:x-oauth-basic -s ${env.GITHUB_BASE_URL}/orgs/${env.SRC_GH_ORG}/repos | jq '.[] | .name'")
                   echo "raw_repos = ${raw_repos}"
                   //def target_repos= sh(script: "echo ${raw_repos} | jq -r '.[] | .name'| grep -v ${env.TARGET_BLACKLIST}",returnStdout: true)          
