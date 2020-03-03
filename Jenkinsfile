@@ -24,7 +24,7 @@ pipeline {
                   echo "raw_repos = ${raw_repos}"
                   //def target_repos= sh(script: "echo ${raw_repos} | jq -r '.[] | .name'| grep -v ${env.TARGET_BLACKLIST}",returnStdout: true)          
                   for (repo in raw_repos)
-                	sh "git_labels.sh ${env.GH_TOKEN} andrew11994 test andrew11994 $repo"    
+                	sh "git_labels.sh ${GH_TOKEN} andrew11994 test andrew11994 $repo"    
                     }
                 }    
             }
