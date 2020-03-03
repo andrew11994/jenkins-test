@@ -20,6 +20,7 @@ pipeline {
             steps {
                 script {
                   withCredentials([string(credentialsId: 'git', Variable: 'GH_TOKEN')]) {
+			  echo ${env.GITHUB_BASE_URL}
                   def raw_repos= sh(script: "curl -u ${GH_TOKEN}:x-oauth-basic -s ${env.GITHUB_BASE_URL}/orgs/${env.SRC_GH_ORG}/repos | jq '.[] | .name'")
                   echo "raw_repos = ${raw_repos}"
                   //def target_repos= sh(script: "echo ${raw_repos} | jq -r '.[] | .name'| grep -v ${env.TARGET_BLACKLIST}",returnStdout: true)          
