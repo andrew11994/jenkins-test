@@ -1,0 +1,16 @@
+image: docker:latest
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay
+  SPRING_PROFILES_ACTIVE: gitlab-ci
+
+stages:
+  - pactcli
+
+run-sample-commands:
+  image: pactfoundation/pact-cli
+  stage: pactcli
+  script:
+  - pact-broker
